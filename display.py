@@ -21,6 +21,7 @@ def handle_selection(results, mode, verbose=True):
         print("👉 [ 0–n ]   pick another song")
         if mode == "offline":
             print("👉 [ online ]  go online to find the song")
+            print("👉 [ remove ]  removes the top song")
         elif mode == "online":
             print("👉 [ more ]  see more songs")
             print("👉 [ remove ]  removes the song that was automatically downloaded")

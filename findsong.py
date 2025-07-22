@@ -66,6 +66,11 @@ def main():
             elif selected == "online" and online_available:
                 break
 
+            elif selected == "remove":
+                # we know it's not empty
+                lyrics_store.remove_song(local_results[0])
+                return
+
             elif isinstance(selected, dict):
                 pydoc.pager(selected["lyrics"])
                 # does not break
@@ -89,7 +94,6 @@ def main():
     display.print_song_choices(results)
 
     # Background caching, always causing problems
-    """
     def cache_top_song(song):
         def worker():
             if not lyrics_store.get_cached_lyrics(song['title'], song['artist']):
@@ -101,7 +105,6 @@ def main():
                         song['title'], song['artist'], lyrics)
         Thread(target=worker, daemon=True).start()
     """
-
     def cache_top_song(song):
         print(f"📦 Caching: {song['artist']} – {
               song['title']}...", end="", flush=True)
@@ -119,7 +122,7 @@ def main():
                 print(" ❌ Failed to fetch lyrics.")
         else:
             print(" ✅ Already cached.")
-
+    """
     cache_top_song(results[0])
 
     selected = display.handle_selection(results, mode="online")

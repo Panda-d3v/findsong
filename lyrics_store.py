@@ -195,3 +195,24 @@ def remove_last_cached_song():
         print("🗑️ Song removed.")
     else:
         print("✅ Song kept.")
+
+
+def remove_cached_song_by_index(index):
+    db = _load_lyrics_db()
+    if not db:
+        print("📭 No songs in the database.")
+        return
+
+    if not (0 <= index < len(db)):
+        raise IndexError("Index out of range")
+
+    song = db[index]
+    print(f"\n🗑️ Deleting song at position {index+1}:")
+    print(f"🎤 {song['artist']} – {song['title']}")
+    confirm = input("Confirm? [y/N]: ").strip().lower()
+    if confirm == "y":
+        del db[index]
+        _save_lyrics_db(db)
+        print("✅ Song removed.")
+    else:
+        print("❎ Song kept.")

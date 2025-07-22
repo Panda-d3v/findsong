@@ -10,11 +10,21 @@ def parameter_cli(arg):
         return True
 
     # DELETE LAST
-    elif arg in ["-rm", "--delete-last"]:
-        from lyrics_store import remove_last_cached_song
-        remove_last_cached_song()
-        return True
 
+    elif arg in ["-rm", "--delete-last"]:
+        from lyrics_store import remove_cached_song_by_index, remove_last_cached_song
+
+        if len(sys.argv) >= 3:
+            try:
+                index = int(sys.argv[2]) - 1  # make it 0-based
+                remove_cached_song_by_index(index)
+            except ValueError:
+                print("❌ Invalid number. Usage: -rm [index]")
+            except IndexError:
+                print("❌ No song at that index.")
+        else:
+            remove_last_cached_song()
+        return True
     # CLEAR ALL
     elif arg in ["-clear", "--clear"]:
         from lyrics_store import clear_all_songs

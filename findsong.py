@@ -72,8 +72,8 @@ def main():
                 return
 
             elif isinstance(selected, dict):
-                pydoc.pager(selected["lyrics"])
-                # does not break
+                # pydoc.pager(selected["lyrics"])
+                display.display_lyrics(selected)
 
             elif not online_available:
                 print("🛑 No internet, and nothing else to find.")

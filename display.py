@@ -81,3 +81,16 @@ def print_song_choices(results):
             print(f"    {idx}️⃣ . 🎵 {song['artist']} – {song['title']}")
             # the weird character there allows to do 1, 2, 3 in unicode ?
         print()
+
+
+def display_lyrics(song):
+    try:
+        from rich.console import Console
+        from rich.markdown import Panel
+        console = Console()
+        title = f"{song['artist']} — {song['title']}"
+        lyrics = song["lyrics"]
+        panel = Panel(lyrics, title=title, border_style="cyan")
+        console.print(panel)
+    except ImportError:
+        print(song["lyrics"])

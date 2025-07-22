@@ -11,7 +11,7 @@ def parameter_cli(arg):
 
     # DELETE LAST
 
-    elif arg in ["-rm", "--delete-last"]:
+    elif arg in ["-rm"]:
         from lyrics_store import remove_cached_song_by_index, remove_last_cached_song
 
         if len(sys.argv) >= 3:
@@ -40,7 +40,7 @@ def parameter_cli(arg):
 
     Options:
         -h, --help         Show this help message
-        -list, --list      List all cached songs (offline library)
+        -l, --list      List all cached songs (offline library)
         -del, --delete     Remove the last cached song
         -clear, --clear    Delete all cached songs (with confirmation)
     """)

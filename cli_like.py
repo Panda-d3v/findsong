@@ -27,5 +27,21 @@ def parameter_cli(arg):
         title_query = " ".join(sys.argv[2:])
         show_song_info(title_query)
         return True
+
+    elif arg in ['-h', '--help']:
+        print("""
+    🎧 findsong — the lyrical command-line companion 🤠
+
+    Usage:
+        findsong "some lyrics or song title"
+
+    Options:
+        -h, --help         Show this help message
+        -list, --list      List all cached songs (offline library)
+        -del, --delete     Remove the last cached song
+        -clear, --clear    Delete all cached songs (with confirmation)
+        -info "title"      Show details & lyrics preview for a song
+    """)
+        return True
     else:
         return False

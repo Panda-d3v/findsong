@@ -72,8 +72,8 @@ def main():
                 return
 
             elif isinstance(selected, dict):
-                # pydoc.pager(selected["lyrics"])
-                display.display_lyrics(selected["lyrics"])
+                pydoc.pager(selected["lyrics"])
+                # display.display_lyrics(selected["lyrics"])
 
             elif not online_available:
                 print("🛑 No internet, and nothing else to find.")
@@ -152,8 +152,8 @@ def main():
                     break
 
             if lyrics:
-                # pydoc.pager(lyrics)  # then goes to selected = display ...
-                display.display_lyrics(lyrics)
+                pydoc.pager(lyrics)  # then goes to selected = display ...
+                # display.display_lyrics(lyrics)
 
         elif selected == "quit":
             break

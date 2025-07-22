@@ -163,19 +163,6 @@ def clear_all_songs():
         print("✅ Songs kept.")
 
 
-def show_song_info(title_query):
-    db = _load_lyrics_db()
-    title_query = title_query.lower().strip()
-    for song in db:
-        if title_query in song["title"].lower():
-            print(f"\n🎵 Title : {song['title']}")
-            print(f"🎤 Artist: {song['artist']}")
-            preview = song['lyrics'][:300].strip().replace("\n", " ")
-            print(f"📝 Lyrics: {preview}...\n")
-            return
-    print("❌ Song not found.")
-
-
 def remove_last_cached_song():
     db = _load_lyrics_db()
     if not db:

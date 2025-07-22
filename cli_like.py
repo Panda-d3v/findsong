@@ -31,13 +31,6 @@ def parameter_cli(arg):
         clear_all_songs()
         return True
 
-    # INFO ON ONE SONG
-    elif arg in ["-info", "--info"] and len(sys.argv) >= 3:
-        from lyrics_store import show_song_info
-        title_query = " ".join(sys.argv[2:])
-        show_song_info(title_query)
-        return True
-
     elif arg in ['-h', '--help']:
         print("""
     🎧 findsong — the lyrical command-line companion 🤠
@@ -50,7 +43,6 @@ def parameter_cli(arg):
         -list, --list      List all cached songs (offline library)
         -del, --delete     Remove the last cached song
         -clear, --clear    Delete all cached songs (with confirmation)
-        -info "title"      Show details & lyrics preview for a song
     """)
         return True
     else:

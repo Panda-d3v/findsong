@@ -1,4 +1,4 @@
-# Findsong 🎵
+# Findsong
 
 Have you ever wanted to find a song knowing only its lyrics ? Or to find the lyrics of a song but you only know the chorus ?
 
@@ -22,7 +22,9 @@ This tool is for terminal use only, and is meant to stay like this. Who needs a 
 - If something else than the first result is selected, caches the lyrics too
 
 ## ⚠️ Disclaimer
+This tool is intended for **personal, educational, or research use only**.
+While the source code is provided under the MIT License, users are responsible for complying with the [Genius API Terms of Use](https://genius.com/static/terms) and applicable copyright laws.
 This project uses the Genius API to fetch song lyrics for personal use.
 Lyrics are copyrighted by their respective owners.
-No lyrics are stored or distributed with this code.
+No lyrics are distributed with this code.
 You must provide your own Genius API token.

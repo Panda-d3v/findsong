@@ -83,14 +83,12 @@ def print_song_choices(results):
         print()
 
 
-def display_lyrics(song):
+def display_lyrics(lyrics):
     try:
         from rich.console import Console
         from rich.markdown import Panel
         console = Console()
-        title = f"{song['artist']} — {song['title']}"
-        lyrics = song["lyrics"]
-        panel = Panel(lyrics, title=title, border_style="cyan")
+        panel = Panel(lyrics, border_style="cyan")
         console.print(panel)
     except ImportError:
-        print(song["lyrics"])
+        print(lyrics)

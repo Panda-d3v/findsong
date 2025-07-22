@@ -1,4 +1,4 @@
-# Findsong
+# Findsong 🎵
 
 Have you ever wanted to find a song knowing only its lyrics ? Or to find the lyrics of a song but you only know the chorus ?
 

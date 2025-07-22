@@ -1,3 +1,4 @@
+import time  # at the top of your file if not already
 import sys  # for argv
 import pydoc  # to show the lyrics
 import warnings
@@ -37,32 +38,38 @@ def main():
     ##########################################################################
     # 1. Try offline search first
     local_results = lyrics_store.search_local_songs(query)
-    print("\n🪵 Found in your local stash:")
-    for i, song in enumerate(local_results):
-        print(f"{i}️⃣ {song['artist']} – {song['title']}")
-    selected = display.handle_selection(local_results, mode="offline")
-    while True:
-        if selected == "restart":
-            new_input = input("😇 Trying again? Here you go: ")
-            sys.argv = [sys.argv[0]] + new_input.split()
-            return main()
+    if len(local_results) == 0:
+        if online_available:
+            print("Going online")
+        else:
+            print("You are offline, couldn't find anything on device")
+    else:
+        print("\n🪵 Found in your local stash:")
+        for i, song in enumerate(local_results):
+            print(f"{i}️⃣ {song['artist']} – {song['title']}")
+        selected = display.handle_selection(local_results, mode="offline")
+        while True:
+            if selected == "restart":
+                new_input = input("😇 Trying again? Here you go: ")
+                sys.argv = [sys.argv[0]] + new_input.split()
+                return main()
 
-        elif selected == "quit":
-            return
+            elif selected == "quit":
+                return
 
-        elif selected == "online" and online_available:
-            break
+            elif selected == "online" and online_available:
+                break
 
-        elif isinstance(selected, dict):
-            pydoc.pager(selected["lyrics"])
-            # does not break
+            elif isinstance(selected, dict):
+                pydoc.pager(selected["lyrics"])
+                # does not break
 
-        elif not online_available:
-            print("🛑 No internet, and nothing else to find.")
-            return
+            elif not online_available:
+                print("🛑 No internet, and nothing else to find.")
+                return
 
-        selected = display.handle_selection(
-            local_results, mode="offline", verbose=False)
+            selected = display.handle_selection(
+                local_results, mode="offline", verbose=False)
     ###########################################################################
     # 2. Online search if not found locally, or if user chooses to continue
     results = False
@@ -75,7 +82,8 @@ def main():
 
     display.print_song_choices(results)
 
-    # Background caching
+    # Background caching, always causing problems
+    """
     def cache_top_song(song):
         def worker():
             if not lyrics_store.get_cached_lyrics(song['title'], song['artist']):
@@ -86,6 +94,25 @@ def main():
                     lyrics_store.cache_lyrics(
                         song['title'], song['artist'], lyrics)
         Thread(target=worker, daemon=True).start()
+    """
+
+    def cache_top_song(song):
+        print(f"📦 Caching: {song['artist']} – {
+              song['title']}...", end="", flush=True)
+
+        if not lyrics_store.get_cached_lyrics(song['title'], song['artist']):
+            with display.suppress_stdout():
+                lyrics = genius_api.fetch_lyrics_with_lyricsgenius(
+                    song['title'], song['artist']
+                )
+            if lyrics:
+                lyrics_store.cache_lyrics(
+                    song['title'], song['artist'], lyrics)
+                print(" ✅ Done.")
+            else:
+                print(" ❌ Failed to fetch lyrics.")
+        else:
+            print(" ✅ Already cached.")
 
     cache_top_song(results[0])
 
@@ -96,6 +123,8 @@ def main():
             sys.argv = [sys.argv[0]] + new_input.split()
             return main()
             # break
+        elif selected == "remove":
+            lyrics_store.remove_song(results[0])
 
         elif isinstance(selected, dict):
             lyrics = lyrics_store.get_cached_lyrics(

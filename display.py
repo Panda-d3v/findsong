@@ -23,6 +23,7 @@ def handle_selection(results, mode, verbose=True):
             print("👉 [ online ]  go online to find the song")
         elif mode == "online":
             print("👉 [ more ]  see more songs")
+            print("👉 [ remove ]  removes the song that was automatically downloaded")
         print("👉 [ r ]     restart and type again")
         print("👉 [ q ]     quit\n")
 
@@ -36,6 +37,9 @@ def handle_selection(results, mode, verbose=True):
 
         elif choice == "r":
             return "restart"
+
+        elif choice == "remove":
+            return "remove"
 
         elif choice == "online":
             return "online"

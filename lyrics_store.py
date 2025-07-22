@@ -49,6 +49,25 @@ def cache_lyrics(title, artist, lyrics):
     _save_lyrics_db(db)
 
 
+def remove_song(song):
+    db = _load_lyrics_db()
+    target_title = _normalize(song['title'])
+    target_artist = _normalize(song['artist'])
+
+    match_index = None
+    for i, s in enumerate(db):
+        if _normalize(s['title']) == target_title and _normalize(s['artist']) == target_artist:
+            match_index = i
+            break
+
+    if match_index is not None:
+        removed = db.pop(match_index)
+        _save_lyrics_db(db)
+        print(f"🗑️ Removed: {removed['artist']} – {removed['title']}")
+    else:
+        print("❌ Song not found in database.")
+
+
 def token_overlap_score(query_tokens, text_tokens):
     common = query_tokens & text_tokens
     if not common:

@@ -14,7 +14,8 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 def is_connected_to_genius(timeout=3):
     try:
-        socket.create_connection(("genius.com", 80), timeout=timeout)
+        # Google's DNS is fast and stable
+        socket.create_connection(("en.wikipedia.org", 443), timeout=timeout)
         return True
     except OSError:
         return False

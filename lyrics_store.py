@@ -140,3 +140,58 @@ def search_local_songs(query, max_results=5, cutoff=0.5):
         }
         for _, song in matches[:max_results]
     ]
+
+
+def list_cached_songs():
+    db = _load_lyrics_db()
+    if not db:
+        print("🫙 No songs cached yet.")
+        return
+
+    print(f"\n🎶 You’ve got {len(db)} song(s) cached:\n")
+    for i, song in enumerate(db, 1):
+        print(f"{i}. {song['artist']} – {song['title']}")
+
+
+def clear_all_songs():
+    confirm = input(
+        "⚠️ Are you sure you want to delete ALL cached songs? [y/N]: ").strip().lower()
+    if confirm == "y":
+        _save_lyrics_db([])
+        print("🧹 All songs cleared.")
+    else:
+        print("✅ Songs kept.")
+
+
+def show_song_info(title_query):
+    db = _load_lyrics_db()
+    title_query = title_query.lower().strip()
+    for song in db:
+        if title_query in song["title"].lower():
+            print(f"\n🎵 Title : {song['title']}")
+            print(f"🎤 Artist: {song['artist']}")
+            preview = song['lyrics'][:300].strip().replace("\n", " ")
+            print(f"📝 Lyrics: {preview}...\n")
+            return
+    print("❌ Song not found.")
+
+
+def remove_last_cached_song():
+    db = _load_lyrics_db()
+    if not db:
+        print("📭 No songs in the database.")
+        return
+
+    last_song = db[-1]
+
+    print("\n🕵️ Last cached song:")
+    print(f"🎵 Title : {last_song['title']}")
+    print(f"🎤 Artist: {last_song['artist']}")
+
+    confirm = input("❓ Remove this song? [y/N]: ").strip().lower()
+    if confirm == "y":
+        db.pop()
+        _save_lyrics_db(db)
+        print("🗑️ Song removed.")
+    else:
+        print("✅ Song kept.")

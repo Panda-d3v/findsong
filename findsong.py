@@ -8,6 +8,7 @@ import socket
 import genius_api
 import lyrics_store
 import display
+import cli_like
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
@@ -20,6 +21,10 @@ def is_connected_to_genius(timeout=3):
 
 
 def main():
+    # --list --clear
+    if len(sys.argv) >= 2 and cli_like.parameter_cli(sys.argv[1]):
+        sys.exit(0)
+
     token = genius_api.token
     if not token:
         print("❌ GENIUS_ACCESS_TOKEN not set in environment.")
